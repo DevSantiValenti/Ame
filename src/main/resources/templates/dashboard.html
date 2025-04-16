@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+
+<body class="ms-5 me-5 my-3">
+    <div layout:fragment="contenido">
+        <div class="container mt-5">
+            <div class="row g-4">
+                <div class="col-md-3" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                    <div class="card">
+                        <a th:href="@{/clientes/listado}">
+                            <img src="/img/cliente.png" class="card-img-top" alt="Imagen 3">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Clientes</h5>
+                            <p class="card-text text-center">Listado de Clientes.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_CAJERO')">
+                    <div class="card">
+                        <a th:href="@{/ventas/listado}">
+                            <img src="/img/venta.png" class="card-img-top" alt="Imagen 3">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Ventas</h5>
+                            <p class="card-text text-center">Listado de Ventas.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" sec:authorize="hasAnyRole('ROLE_REPOSITOR', 'ROLE_ADMIN', 'ROLE_CAJERO')">
+                    <div class="card">
+                        <a th:href="@{/productos/listadoAdmin}">
+                            <img src="/img/producto.png" class="card-img-top" alt="Imagen 3">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Productos</h5>
+                            <p class="card-text text-center">Listado de Productos.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" sec:authorize="hasAnyRole('ROLE_REPOSITOR', 'ROLE_ADMIN', 'ROLE_CAJERO')">
+                    <div class="card">
+                        <a th:href="@{/compras/listado}">
+                            <img src="/img/compra.png" class="card-img-top" alt="Imagen 3">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Compras</h5>
+                            <p class="card-text text-center">Listado de Compras.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                    <div class="card">
+                        <a th:href="@{/proveedores/listado}">
+                            <img src="/img/proveedor.png" class="card-img-top" alt="Imagen 3">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Proveedores</h5>
+                            <p class="card-text text-center">Listado de Proveedores.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_CAJERO')">
+                    <div class="card">
+                        <a th:href="@{/usuarios/listado}">
+                            <img src="/img/usuario.png" class="card-img-top" alt="Imagen 3">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Usuarios</h5>
+                            <p class="card-text text-center">Listado de Usuarios.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pedidos comprados por clientes através del carrito -->
+                <div class="col-md-3" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_CAJERO','ROLE_REPOSITOR')">
+                    <div class="card">
+                        <a th:href="@{/pedidos/listado}">
+                            <img src="/img/pedidos.png" class="card-img-top" alt="Imagen 3">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Pedidos</h5>
+                            <p class="card-text text-center">Pedidos a entregar.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_CAJERO', 'ROLE_REPOSITOR')">
+                    <div class="card">
+                        <a th:href="@{/movimientos/listado}">
+                            <img src="/img/mov.png" class="card-img-top" alt="Imagen 3">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Movimientos</h5>
+                            <p class="card-text text-center">Movimientos de la Caja.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mis JS -->
+    <script th:fragment="js"></script>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+</head>
+
+<body class="ms-5 me-5 my-3">
+    <div layout:fragment="contenido">
+        <div class="card my-4">
+            <div class="card-header">
+                <h4 th:text="${titulo}"></h4>
+            </div>
+            <div class="card-body">
+                <table id="tabla-compras" class="table table-striped table-bordered table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th style="min-width: 150px;">Total</th>
+                            <th>Fecha</th>
+                            <th>Descripción</th>
+                            <th>Productos - Cantidad</th>
+                            <th>Usuario</th>
+                            <th>Proveedor</th>
+                            <th>Opciones</th>
+                            <!-- <th>Cargado</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="c : ${compras}">
+                            <td th:text="${c.id}"></td>
+                            <td th:text="'$ ' + ${c.total}"></td>
+                            <td th:text="${#temporals.format(c.fechaHora, 'dd/MM/yyyy')}"></td>
+                            <td th:text="${c.descripcionGral}"></td>
+                            <!-- <td>
+                                <ul>
+                                    <li th:each="linea : ${c.lineas}" th:text="${linea.producto} + ' - ' + ${linea.cantidad}"></li>
+                                </ul>
+                            </td> -->
+                            <td>
+                                <!-- Aquí usamos Thymeleaf para renderizar las líneas de cada compra -->
+                                <ul class="lista-lineas" id="lineas-${c.id}">
+                                  <li th:each="linea : ${c.lineas}" th:text="${linea.producto} + ' - ' + ${linea.cantidad}"></li>
+                                </ul>
+                              </td>
+                            <td th:text="${c.usuario}"></td>
+                            <!-- <td th:text="${c.proveedor}"></td> -->
+                            <td th:text="${c.proveedor != null} ? ${c.proveedor.nombre} : 'Sin Proveedor'"></td>
+                            <td>
+                                <a th:href="@{/compras/editar/} + ${c.id}" class="btn btn-sm btn-warning">Editar</a>
+                                <a th:href="@{/compras/borrar/} + ${c.id}" class="btn btn-sm btn-danger">Borrar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>#</th>
+                            <th>Total</th>
+                            <th>Fecha</th>
+                            <th>Descripción</th>
+                            <th>Productos</th>
+                            <th>Usuario</th>
+                            <th>Proveedor</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="card-footer">
+                <a th:href="@{/compras/nuevo}" class="btn btn-outline-primary float-end">Nueva Compra</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mis JS -->
+    <script th:fragment="js" th:src="@{/js/compras-list-admin.js}"></script>
+
+
+</body>
+
+</html>

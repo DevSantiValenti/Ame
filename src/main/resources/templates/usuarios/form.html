@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+</head>
+
+<body class="ms-5 me-5 my-3">
+    <div layout:fragment="contenido">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h4 class="text-primary" th:text="${titulo}"></h4>
+            </div>
+            <form method="post" th:action="@{/usuarios/guardar}" th:object="${usuario}">
+                <div class="card-body">
+                    <div class="form">
+                        <input type="hidden" th:field="*{id}" />
+                        <label for="nombre" class="form-label">Nombre y Apellido</label>
+                        <input type="text" id="nombre" class="form-control" maxlength="30" th:field="*{nombre}" th:errorClass="'form-label text-danger'">
+                        <small class="form-label text-danger" th:errors="*{nombre}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="pass" class="form-label">Clave</label>
+                        <input type="password" id="pass" class="form-control" minlength="5" maxlength="30" th:field="*{clave}" th:errorClass="'form-label text-danger'">
+                        <small class="form-label text-danger" th:errors="*{clave}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="ema" class="form-label">E-mail</label>
+                        <input type="email" id="ema" class="form-control" th:field="*{email}" th:errorClass="'form-label text-danger'">
+                        <small class="form-label text-danger" th:errors="*{email}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="per" class="form-label">Tipo de Usuario</label>
+                        <select name="per" id="per" class="form-select" th:field="*{permiso}">
+                            <option th:each="p : ${permisos}" th:value="${p.id}" th:text="${p}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-footer mb-5">
+                    <button type="submit" class="btn btn-outline-success float-end ms-2">Guardar</button>
+                    <a th:href="@{/usuarios/listado}" class="btn btn-outline-danger float-end">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mis JS -->
+    <script th:fragment="js"></script>
+</body>
+
+</html>

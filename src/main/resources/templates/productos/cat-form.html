@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/layout}"
+>
+        
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+</head>
+<body  class="ms-5 me-5 my-3" >
+    <div layout:fragment="contenido">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h4 th:text="${titulo}"></h4>
+            </div>
+            <form th:action="@{/productos/guardarCat}" method="post" th:object="${categoria}">
+                <div class="card-body">
+                    <div class="form">
+                        <label for="cat" class="form-label">Nombre de la categoria</label>
+                        <input type="text" class="form-control" name="" id="cat" for="nombre" th:field="*{nombre}" th:errorClass="'form-label text-danger">
+                        <small class="form-label text-danger" th:errors="*{nombre}"></small>
+                    </div>
+                </div>
+                <div class="card-footer mb-5">
+                    <button type="submit" class="btn btn-outline-success float-end">Guardar</button>
+                    <a th:href="@{/productos/guardarCat}"></a>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+
+    <!-- Mis JS -->
+    <script th:fragment="js"></script>
+</body>
+</html>

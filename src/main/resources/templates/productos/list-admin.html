@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+    <!-- <script th:if="${!productosBajoStock.isEmpty()}">
+        alert("⚠️ Hay productos con stock bajo.");
+    </script> -->
+</head>
+
+
+<body class="ms-5 me-5 my-3">
+    <div layout:fragment="contenido" class="container-fluid">
+
+        <div th:if="${mensajeStock ne ''}" class="alert alert-warning">
+            <p th:text="${mensajeStock}"></p>
+        </div>
+
+        <div class="card my-4">
+            <div class="card-header">
+                <h4 class="card-tittle" th:text="${titulo}"></h4>
+            </div>
+            <div class="card-body">
+                <table id="tabla-productos" class="table table-striped table-hover table-bordered table-responsive"
+                    style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Imágen</th>
+                            <th>Descripción</th>
+                            <th>Precio Mayorista</th>
+                            <th>Precio Minorista</th>
+                            <th>Cantidad</th>
+                            <th>Categoria</th>
+                            <th>Material</th>
+                            <th style="max-width: 35px;">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="p : ${productos}" th:class="${not p.activo} ? 'tachado' : ''">
+                            <td th:text="${p.id}"></td>
+                            <td>
+                                <img th:src="@{${p.linkImagen}}" alt="Foto" height="100px">
+                            </td>
+                            <td th:text="${p.descripcion}"></td>
+                            <td th:text="${p.precioMay}"></td>
+                            <td th:text="${p.precioMin}"></td>
+                            <td th:text="${p.stock}"></td>
+                            <td th:text="${p.categoria}"></td>
+                            <td th:text="${p.material}"></td>
+                            <td>
+                                <a sec:authorize="hasAnyRole('ROLE_REPOSITOR', 'ROLE_ADMIN', 'ROLE_CAJERO')"
+                                    th:href="@{/productos/editar/} + ${p.id}" class="btn btn-sm btn-warning">Editar</a>
+                                <a sec:authorize="hasAnyRole('ROLE_REPOSITOR', 'ROLE_ADMIN', 'ROLE_CAJERO')"
+                                    th:href="@{/productos/borrar/} + ${p.id}" class="btn btn-sm btn-danger">
+                                    <span th:text="${not p.activo} ? 'Habilitar' : 'Deshabilitar'" href=""></span>
+                                </a>
+                                <a sec:authorize="hasAnyRole('ROLE_REPOSITOR', 'ROLE_ADMIN', 'ROLE_CAJERO')"
+                                    th:href="@{/productos/borrarC/} + ${p.id}" class="btn btn-sm btn-danger">Borrar</a>
+                                <!-- <a th:text="${not p.activo} ? 'Habilitar' : 'Deshabilitar'" class="btn btn-sm btn-success" href=""></a> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>#</th>
+                            <th>Imágen</th>
+                            <th>Descripción</th>
+                            <th>Precio Mayorista</th>
+                            <th>Precio Minorista</th>
+                            <th>Cantidad</th>
+                            <th>Categoría</th>
+                            <th>Material</th>
+                            <th style="max-width: 35px;">Opciones</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="card-footer">
+                <a th:href="@{/productos/listadoCat}" class="btn btn-outline-primary">Categorías</a>
+                <a th:href="@{/productos/nuevo}" class="btn btn-outline-primary float-end">Nuevo Producto</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- <script th:fragment="js">
+        let table = new DataTable('#tabla-productos');
+    </script> -->
+
+    <script th:fragment="js" th:src="@{/js/productos-list-admin.js}"></script>
+</body>
+
+</html>

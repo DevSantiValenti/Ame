@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${titulo}"></title>
+
+    <!-- jQuery primero -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- Luego select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet" type="text/css">
+
+    <!-- BoxICons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Datatables BS CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
+
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+
+    <!-- Icono del logo -->
+    <link rel="icon" href="/img/amepng.png" type="Imagen/png">
+
+    <!-- JQuery UI CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+
+    <!-- Listado de clientes VENTA DE ACA PARA ABAJO NO ESTABA ANTES -->
+
+
+</head>
+
+<body class="ms-5 me-5 my-3">
+
+    <!-- Barra de navegacion -->
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar bg-light" style="background-color: #23242a"
+        data-bs-theme="dark">
+        <div class="container-fluid">
+            <!-- <div class="btn-group" role="group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Menú
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Mochilas</a></li>
+                    <li><a class="dropdown-item" href="#">Carteras</a></li>
+                    <li><a class="dropdown-item" href="#">Vasos</a></li>
+                    <li><a class="dropdown-item" href="#">Termolares y termos</a></li>
+                    <li><a class="dropdown-item" href="#">Mates y bombillas</a></li>
+                    <li><a class="dropdown-item" href="#">Bolsos</a></li>
+                    <li><a class="dropdown-item" href="#">Varios</a></li>
+                </ul>
+            </div> -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/home">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/login">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="https://wa.me/message/BMSOCOQGMQQDO1">Mayorista<img
+                                src="/img/wap.png" alt="WhatsApp"
+                                style="width: 20px; height: 20px; margin-right: 5px;"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/productos/listado">Productos</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyRole('ROLE_REPOSITOR', 'ROLE_ADMIN', 'ROLE_CAJERO')">
+                        <a class="nav-link active" th:href="@{/dashboard/inicio}">Dashboard</a>
+                    </li>
+                    <!--<li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                    </li>-->
+                </ul>
+                <ul class="navbar-nav ms-auto float-end" sec:authorize="isAuthenticated()">
+                    <li class="nav-item dropdown">
+                        <a id="linkUsuario" href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                            role="button" aria-expanded="false">
+                            <i class='bx bx-user bx-tada'></i>
+                            <span>Hola</span>
+                            <!-- <span sec:authentication="name"></span> -->
+                             <span th:text="${nombreUsuario}"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="linkUsuario">
+                            <li>
+                                <!-- <a class="dropdown-item" href="#">Cuenta</a> -->
+
+                                <a class="dropdown-item" th:href="(${idCliente != null}) ? @{/clientes/editar/} + ${idCliente} : @{/usuarios/editar/} + ${idUsuario}">Configuración</a>
+                                <hr />
+                                <form id="frmSalir" th:action="@{/logout}" method="post">
+                                    <a class="dropdown-item" href="#" onclick="$('#frmSalir').submit();">Cerrar
+                                        Sesión</a>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Ingrese un producto..."
+                        aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form> -->
+            </div>
+            <!-- Icono del carrito -->
+            <div class="d-flex align-items-center" sec:authorize="isAuthenticated()">
+                <div class="d-flex align-items-center">
+                    <a id="cart-button" class="btn btn-outline-light position-relative">
+                        <i class='bx bx-cart'></i>
+                        <span id="contador-carrito"
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+
+            <!-- <div id="carrito-panel" class="carrito-panel d-none">
+                <h5>Tu carrito</h5>
+                <ul id="lista-carrito" class="list-group mb-3"></ul>
+                <button id="btn-pagar" class="btn btn-success w-100">Pagar</button>
+            </div> -->
+        </div>
+    </nav>
+
+    <!-- Mensajes -->
+    <!-- Mensaje al habilitar/deshabilitar productos -->
+    <div class="alert alert-info alert-dismissible fade show" role="alert" th:if="${info != null}">
+        <i class='bx bx-info-circle bx-tada'></i>
+        &nbsp;
+        <span th:text="${info}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+    <!-- Mensaje al añadir productos -->
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+        <i class='bx bx-check-double bx-tada'></i>
+        &nbsp;
+        <span th:text="${success}">Hola</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+    <!-- Mensaje al Editar un producto -->
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${warning != null}">
+        <i class='bx bx-message-rounded-dots bx-tada'></i>
+        &nbsp;
+        <span th:text="${warning}">Hola</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+    <!-- Mensaje al borrar un producto -->
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${danger != null}">
+        <i class='bx bx-error-circle bx-tada'></i>
+        &nbsp;
+        <span th:text="${danger}">Hola</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+
+    <!-- +
+     +
+     +
+     +
+     +
+     +
+      -->
+    <!-- PARTE QUE TENGO QUE REEMPLAZAR EN LAS DEMAS PAGINAS QUE CREE, AGREGAR COSAS-->
+    <div layout:fragment="contenido">
+
+    </div>
+    <!-- 
+    +
+    +
+    +
+    +
+    +
+     -->
+
+    <!-- Panel desplegable del carrito -->
+
+    <form id="form-pago" action="/createAndRedirect" method="GET">
+        <div id="carrito-panel" class="d-none position-fixed bg-light border p-3"
+            style="width: 450px; right: 0; top: 50px;">
+            <h5 class="text-center">Carrito de Compras</h5>
+            <table id="tabla-carrito" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Los productos se generarán dinámicamente -->
+                </tbody>
+            </table>
+            <h6 id="total-carrito" class="text-end">Total: $0</h6>
+
+            <!-- Inputs ocultos para enviar datos -->
+            <div id="inputs-carrito"></div>
+
+            <button type="submit" class="btn btn-primary w-100">Pagar con Mercado Pago<img src="/img/mp4.png" alt="mp" style="height: 35px; width: 50px;"></button>
+            <!-- <img src="/img/mp.png" alt="mp" style="height: 50px; width: 50px;"> -->
+        </div>
+    </form>
+
+    <!-- FOOTER  -->
+    <div class="mt-5">
+        <footer class="text-white text-center text-lg-start" style="background-color: #23242a" data-bs-theme="dark">
+            <div class="container p-4">
+                <div class="row">
+                    <!-- Columna de información de ubicación -->
+                    <div class="col-md-4 mb-4">
+                        <h5 class="text-uppercase mb-4">Ubicación</h5>
+                        <p>
+                            Ameghino 45, Resistencia, Chaco
+                        </p>
+                        <br>
+                        <!-- Imagen de la ubicación -->
+                        <a href="https://www.google.com.ar/maps/place/Ameghino+45,+H3500+Resistencia,+Chaco/@-27.4542957,-58.9930622,17z/data=!3m1!4b1!4m6!3m5!1s0x94450c8cb92dbb9d:0x7a61721b83c5bf6!8m2!3d-27.4542957!4d-58.9904873!16s%2Fg%2F11sw2kw05b?entry=ttu&g_ep=EgoyMDI0MDkyMy4wIKXMDSoASAFQAw%3D%3D"
+                            target="_blank"><img src="/img/a45.png" alt="Ubicación" class="img-fluid rounded"
+                                style="max-width: 100%; height: auto;"></a>
+                    </div>
+
+                    <!-- Otra columna opcional (por ejemplo, contacto) -->
+                    <div class="col-md-4 mb-4">
+                        <h5 class="text-uppercase mb-4">Contacto</h5>
+                        <p>
+                            <!-- Acceso a Whatsapp -->
+                            <span><i class="fas fa-phone"></i><a href="https://wa.me/message/BMSOCOQGMQQDO1"
+                                    target="_blank"> <img src="/img/wap.png" alt="WhatsApp"
+                                        style="width: 20px; height: 20px; margin-right: 5px;"></a></span><br>
+                            <!-- Acceso a Instagram -->
+                            <span><i class="fas fa-phone"></i><a
+                                    href="https://www.instagram.com/ame.resis/profilecard/?igsh=MWJoYjhoYjVnem0yMg=="
+                                    target="_blank"> <img src="/img/ig.jpeg" alt="Instagram"
+                                        style="width: 20px; height: 20px; margin-right: 5px;"></a></span><br>
+                            <span><i class="fas fa-envelope"></i> estrellaame@gmail.com</span>
+                        </p>
+                    </div>
+
+                    <!-- Otra columna opcional (por ejemplo, horarios de atención) -->
+                    <div class="col-md-4 mb-4">
+                        <h5 class="text-uppercase mb-4">Horarios de Atención</h5>
+                        <p>
+                            Lunes - Sábados: 9:00 a 13:00 y 17:00 a 21:00<br>
+                        </p>
+                        <br>
+                        <img src="/img/local10.jpg" alt="Entrada del local"
+                            style="max-width: 100%; height: auto; margin-right: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2024 Copyright:
+                <a class="text-white" href="index.html">Amé</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <!-- BoxICons JS -->
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
+    <!-- JQuery Plugin -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
+
+    <!-- Datatables JS -->
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+
+    <!-- JQuery UI JS -->
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+
+    <!-- Sweet Alert JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- JS Del carrito -->
+    <script src="/js/carrito.js"></script>
+
+    <script th:replace="~{:: js}"></script>
+    <!-- Esto hace, que en otras paginas se herede estos JS, ademas de agregar el nuestro para esa pag -->
+
+    <script>
+        $(document).ready(function () {
+            $('#clientesDES').select2();
+        }); 
+    </script>
+
+    <script>
+        setInterval("cerrar()", 3000);
+
+        const cerrar = () => {
+            $(".alert").delay(500).slideUp(500, () => {
+                $(this).hide();
+            })
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.lista-lineas').forEach(function (lista) {
+                // Verificamos si la altura de scrolleado de la lista es mayor que 60px
+                if (lista.scrollHeight > 60) {
+                    // Creamos el botón "Ver más" y lo agregamos después de la lista
+                    const button = document.createElement('button');
+                    button.className = 'ver-mas';
+                    button.textContent = 'Ver más';
+                    lista.parentNode.appendChild(button);
+
+                    button.addEventListener('click', function () {
+                        if (lista.classList.contains('ver-mas')) {
+                            lista.classList.remove('ver-mas');
+                            button.textContent = 'Ver más';
+                        } else {
+                            lista.classList.add('ver-mas');
+                            button.textContent = 'Ver menos';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

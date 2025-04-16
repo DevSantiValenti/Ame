@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+</head>
+
+<body class="ms-5 me-5 my-3">
+    <div layout:fragment="contenido">
+
+
+        <div class="card my-4">
+            <div class="card-header">
+                <h4 class="card-tittle" th:text="${titulo}"></h4>
+            </div>
+            <div class="card-body">
+                <table id="tabla-movimientos" class="table table-striped table-hover table-bordered table-responsive"
+                    style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Operacion</th>
+                            <th>Descripcion</th>
+                            <th>Operador/Cliente</th>
+                            <th>Total</th>
+                            <th>Fecha</th>
+                            <!-- <th style="max-width: 35px;">Opciones</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="m : ${movimientos}">
+                            <td th:text="${m.id}"></td>
+                            <td th:text="${m.compra != null} ? 'Compra' : 'Venta'"></td>
+                            <td th:text="${m.compra != null} ? ${m.compra.descripcionGral} : ${m.venta.descripcionGral}"></td>
+                            <td th:text="${m.compra != null} ? ${m.compra.usuario} : ${m.venta.usuario} + ' / ' + ${m.venta.cliente}"></td>
+                            <td th:text="'$ ' + ${m.compra != null ? m.compra.total.intValue() : m.venta.total.intValue()}"></td>
+                            <td th:text="${m.compra != null ? #temporals.format(m.compra.fechaHora, 'dd/MM/yyyy HH:mm') : (m.venta != null ? #temporals.format(m.venta.fechaHora, 'dd/MM/yyyy HH:mm') : 'Sin fecha')}"></td>
+
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>#</th>
+                            <th>Operacion</th>
+                            <th>Descripcion</th>
+                            <th>Operador</th>
+                            <th>Total</th>
+                            <th>Fecha</th>
+                            <!-- <th style="max-width: 35px;">Opciones</th> -->
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="card-footer">
+                <!-- <a th:href="@{/proveedores/nuevo}" class="btn btn-outline-primary float-end">Nuevo Proveedor</a> -->
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Mis JS -->
+    <script th:fragment="js" th:src="@{/js/movimientos-list-admin.js}"></script>
+</body>
+
+</html>

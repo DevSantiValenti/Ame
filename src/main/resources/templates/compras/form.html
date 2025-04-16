@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+</head>
+
+<body class="ms-5 me-5 my-3">
+    <div layout:fragment="contenido">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h4 class="text-primary" th:text="${titulo}"></h4>
+            </div>
+            <form method="post" th:action="@{/compras/guardar}" th:object="${compra}">
+                <div class="card-body">
+                    <div class="form">
+                        <label for="descri" class="form-label">Descripción de la Compra</label>
+                        <br>
+                        <textarea name="desc" id="desc" th:field="*{descripcionGral}" style="width: 500px;"></textarea>
+                        <!-- <input id="descri" type="text" class="form-control" th:field="*{descripcionGral}" th:errorClass="'form-label text-danger'"> -->
+                        <small class="form-label text-danger" th:errors="*{descripcionGral}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="preMin" class="form-label">Total de la Compra</label>
+                        <input type="text" name="preMin" class="form-control money" th:field="*{total}" th:errorClass="'form-control alert-danger'" placeholder="$">
+                        <small class="form-label text-danger" th:errors="*{total}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="preMay" class="form-label">Fecha de la Compra:</label>
+                        <input type="date" name="preMay" class="form-control money" th:field="*{fechaHora}" th:value="${#temporals.format(compra.fechaHora, 'yyyy-MM-dd')}" th:errorClass="'form-control alert-danger'">
+                        <small class="form-label text-danger" th:errors="*{fechaHora}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="sto" class="form-label">Usuario</label>
+                        <select name="usu" id="usu" th:field="*{usuario}" class="form-select">
+                            <option th:each="u : ${usuarios}" th:value="${u.id}" th:text="${u.nombre}"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="prov" class="form-label">Proveedor</label>
+                        <select name="prov" id="prov" class="form-select" th:field="*{proveedor}">
+                            <option th:each="p : ${proveedores}" th:value="${p.id}" th:text="${p.nombre}"></option>
+                        </select>
+                    </div>
+                    <div class="form">
+                        <label for="preMay" class="form-label">Producto:</label>
+                        <input type="date" name="preMay" class="form-control money" th:field="*{fechaHora}" th:value="${#temporals.format(compra.fechaHora, 'yyyy-MM-dd')}" th:errorClass="'form-control alert-danger'">
+                        <small class="form-label text-danger" th:errors="*{fechaHora}"></small>
+                    </div>
+                </div>
+                <div class="card-footer mb-5">
+                    <button type="submit" class="btn btn-outline-success float-end ms-2">Guardar</button>
+                    <a th:href="@{/compras/listado}" class="btn btn-outline-danger float-end">Cancelar</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Mis JS -->
+    <script th:fragment="js"></script>
+</body>
+
+</html>

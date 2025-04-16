@@ -1,0 +1,152 @@
+<!-- <html>
+    <head>
+        <title>Success</title>
+    </head>
+    <body>
+        <h1>Success!</h1>
+        <h4 th:text="${titulo}" class="text-black-50 my-4"></h4>
+        <h5>Datos de la Operación</h5>
+        <p th:text="'Identificador del Pago: ' + ${paymentId}"></p>
+        <p th:text="'Estado del Pago: ' + ${status}"></p>
+         <p th:text="'Referencia Externa' + ${externalReference}"></p> 
+        <p th:text="'Identificador de Orden de Pago: ' + ${merchantOrderId}"></p>
+        <br />
+        <p class="text-info">Ya puede cerrar esta ventana</p>
+    </body>
+</html> -->
+
+<!--
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/layout}"
+>
+        
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+</head>
+<body  class="ms-5 me-5 my-3" >
+    <div layout:fragment="contenido">
+        <h1>Success!</h1>
+        <h4 th:text="${titulo}" class="text-black-50 my-4"></h4>
+        <h5>Datos de la Operación</h5>
+        <p th:text="'Identificador del Pago: ' + ${paymentId}"></p>
+        <p th:text="'Estado del Pago: ' + ${status}"></p>
+        comentado <p th:text="'Referencia Externa' + ${externalReference}"></p> comentado
+        <p th:text="'Identificador de Orden de Pago: ' + ${merchantOrderId}"></p>
+        <br />
+        <p class="text-info">Ya puede cerrar esta ventana</p>
+        <H1>Puede pasar a retirar su compra por el local ubicado en Ameghino 45, dentro de la Galeria, Local 10 :D</H1>
+    </div>
+
+    Mis JS
+    <script th:fragment="js"></script>
+</body>
+</html>
+  -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+    <!-- Icono del logo -->
+    <link rel="icon" href="/img/amepng.png" type="Imagen/png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #00a650;
+            /* Color de fondo de Mercado Pago */
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #00a650;
+            margin-bottom: 20px;
+        }
+
+        h5 {
+            color: #333;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        .text-info {
+            color: #0069d9;
+            font-style: italic;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #00a650;
+            /* Verde Mercado Pago */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #008f4c;
+            /* Un tono más oscuro */
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="/img/mp4.png" alt="Logo Mercado Pago" class="logo" width="150">
+        <h1>¡Pago Aprobado!</h1>
+        <h4 th:text="${titulo}" class="text-black-50 my-4"></h4>
+        <h5>Datos de la Operación</h5>
+        <p th:text="'Identificador del Pago: ' + ${paymentId}"></p>
+        <p th:text="'Estado del Pago: ' + ${status}"></p>
+        <!-- <p th:text="'Referencia Externa: ' + ${externalReference}"></p> -->
+        <p th:text="'Identificador de Orden de Pago: ' + ${merchantOrderId}"></p>
+        <br />
+        <p class="text-info">Ya puede cerrar esta ventana.</p>
+        <a href="/home" class="btn">Volver a la Página</a>
+        <p class="footer">Puede pasar a retirar su compra por el local ubicado en Ameghino 45, dentro de la Galería,
+            Local 10. ¡Gracias por su compra! 😊</p>
+    </div>
+    <script th:fragment="js"></script>
+</body>
+
+</html>

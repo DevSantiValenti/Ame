@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+</head>
+
+<body class="ms-5 me-5 my-3">
+    <div layout:fragment="contenido">
+
+        <form th:action="@{/compras/guardar}" th:object="${compra}" method="post" style="object-fit: cover;">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-primary" th:text="${titulo}"></h4>
+                </div>
+                <div class="card-body mx-2">
+                    <!-- Formulario maestro de la Compra -->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <small class="text-primary" style="font-weight: bold;">Fecha y Hora</small>
+                                <br>
+                                <label th:field="*{fechaHora}"
+                                    th:text="*{#temporals.format(fechaHora, 'dd/MM/yyyy HH:mm')}"></label>
+                                <!--El * es un modificador de acceso-->
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <small class="text-primary" style="font-weight: bold;">Descripción</small>
+                                <br>
+                                <textarea class="form-control" rows="3" th:field="*{descripcionGral}"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <small class="text-primary" style="font-weight: bold;">Total</small>
+                            <br>
+                            <!-- <h4 id="total" class="text-success">$</h4> -->
+                            <input type="number" id="totalInput" class="text-success" th:field="*{total}"
+                                placeholder="$">
+                        </div>
+                        <div class="col-md-4">
+                            <small class="text-primary" style="font-weight: bold;">Vendedora</small>
+                            <br>
+                            <select name="usu" id="usu" class="form-select" th:field="*{usuario}">
+                                <option th:each="u : ${usuarios}" th:value="${u.id}" th:text="${u}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <small class="text-primary" style="font-weight: bold;">Proveedor</small>
+                            <br>
+                            <select name="prov" id="prov" class="form-select" th:field="*{proveedor}">
+                                <option th:each="p : ${proveedores}" th:value="${p.id}" th:text="${p}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Detalle de la venta(Cuerpo o Linea) -->
+
+                    <!-- Buscador de Productos para añadirlos al detalle de la venta -->
+
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-primary" style="font-weight: bold;">Buscar Producto</small>
+                            <div class="form-group d-flex align-items-center">
+                                <br>
+                                <div class="d-flex w-100">
+                                    <input type="search" id="buscar" class="form-control" placeholder="Cod. Barras o Descripción">
+                                    <a th:href="@{/productos/nuevo}" class="ml-2">
+                                        <img src="/img/producto.png" alt="agregar Producto" style="height: 40px; width: 40px;">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de Lineas de Venta -->
+                    <table class="table table-bordered table-hover table-striped mt-4" id="tabla-productos">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Precio Mayorista</th>
+                                <th>Precio Minorista</th>
+                                <th>Cantidad</th>
+                                <th>Opciones</th>
+                                <!-- <th>Subtotal</th> -->
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <!-- Tabla Auxiliar(Plantilla para las lineas) -->
+                    <table class="d-none">
+                        <tbody id="lineas">
+                            <tr id="fila_{ID}">
+                                <td class="d-none">
+                                    <input type="hidden" value="{ID}" name="item_id[]">
+                                </td>
+                                <td>
+                                    {DESCRIPCION}
+                                </td>
+                                <td>
+                                    {PRECIOMAY}
+                                </td>
+                                <td>
+                                    {PRECIOMIN}
+                                </td>
+                                <td>
+                                    <input type="number" value="1"
+                                         min="1"
+                                        name="cantidad_[]" id="cantidad_{ID}" class="cantidad" data-id="{ID}">
+                                    <!-- name es el nombre del array y el id, es la cantidad del producto-->
+                                </td>
+                                <!-- <td>
+                                    <span id="subtotal_{ID}">0</span>
+                                </td> -->
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-danger" onclick="LineasUtil.borrarLinea({ID});">
+                                        <i class='bx bxs-trash bx-tada'></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <a th:href="@{/compras/listado}" class="btn btn-outline-danger">Volver</a>
+                    <button type="submit" class="btn btn-primary float-end">Guardar</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <!-- Mis JS -->
+    <script th:fragment="js" th:src="@{/js/compras-form.js}"></script>
+</body>
+
+</html>

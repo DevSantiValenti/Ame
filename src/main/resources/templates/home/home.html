@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${titulo}"></title>
+
+    <!-- Icono del logo -->
+    <link rel="icon" href="/img/amepng.png" type="Imagen/png">
+</head>
+
+<body class="ms-5 me-5 my-3">
+
+    <div class="alert alert-info alert-dismissible fade show" role="alert" th:if="${info != null}">
+        <i class='bx bx-info-circle bx-tada'></i>
+        &nbsp;
+        <span th:text="${info}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+
+
+    <!-- Aca deberia ir cosas del HOME -->
+    <div layout:fragment="contenido">
+        <p th:if="${param.logout}" class="alert alert-info alert-dismissible fade show">Sesión cerrada...</p>
+        <section class="centrar">
+            <!-- Aca muestra la foto del inicio "Amé" -->
+            <br>
+        </section>
+        <h3>Algunos de nuestros productos...</h3>
+
+        <section class="fotitos">
+            <img src="/img/ft1.jpeg" alt="ft1">
+            <img src="/img/ft2.jpeg" alt="ft2">
+            <img src="/img/ft3.jpeg" alt="ft3">
+            <img src="/img/ft4.jpeg" alt="ft4">
+            <img src="/img/ft5.jpeg" alt="ft5">
+            <img src="/img/ft6.jpeg" alt="ft6">
+            <img src="/img/ft7.jpeg" alt="ft6">
+            <img src="/img/ft8.jpeg" alt="ft6">
+            <img src="/img/ft9.jpeg" alt="ft6">
+            <img src="/img/ft10.jpeg" alt="ft6">
+            <img src="/img/ft11.jpeg" alt="ft6">
+            <img src="/img/ft12.jpeg" alt="ft6">
+            <img src="/img/ft13.jpeg" alt="ft6">
+            <img src="/img/ft14.jpeg" alt="ft6">
+        </section>
+    </div>
+
+    <!-- JS Del carrito -->
+    <script src="/js/carrito.js"></script>
+    <script th:fragment="js"></script>
+    <script>
+        setInterval("cerrar()", 3000);
+
+        const cerrar = () => {
+            $(".alert").delay(500).slideUp(500, () => {
+                $(this).hide();
+            })
+        }
+    </script>
+</body>
+
+</html>

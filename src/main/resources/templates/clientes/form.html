@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/layout}"
+>
+        
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+</head>
+<body  class="ms-5 me-5 my-3" >
+    <div layout:fragment="contenido">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h4 class="text-primary" th:text="${titulo}"></h4>
+            </div>
+            <form method="post" th:action="@{/clientes/guardar}" th:object="${cliente}">
+                <div class="card-body">
+                    <div class="form">
+                        <label for="nom" class="form-label">Nombre</label>
+                        <input id="nom" type="text" class="form-control"  th:field="*{nombre}">
+                    </div>
+                    <div class="form">
+                        <label for="nac" class="form-label">Fecha de Nacimiento</label>
+                        <input id="nac" type="text" class="form-control" th:field="*{fechaNacimiento}" th:errorClass="'form-label text-danger'">
+                        <small class="form-label text-danger" th:errors="*{fechaNacimiento}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="dni" class="form-label">DNI</label>
+                        <input id="dni" type="text" class="form-control" th:field="*{dni}" th:errorClass="'form-label text-danger'">
+                        <small class="form-label text-danger" th:errors="*{dni}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="ema" class="form-label">Email</label>
+                        <input id="ema" type="text" class="form-control" th:field="*{email}" th:errorClass="'form-label text-danger'">
+                        <small class="form-label text-danger" th:errors="*{email}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="clave" class="form-label">Clave</label>
+                        <input class="controls form-control" for="clave" type="password" name="clave" id="clave"
+                            placeholder="Ingrese su Contraseña" th:field="*{clave}">
+                    </div>
+                    <div class="form">
+                        <label for="tel" class="form-label">Telefono</label>
+                        <input id="tel" type="text" class="form-control" th:field="*{telefono}" th:errorClass="'form-label text-danger'">
+                        <small class="form-label text-danger" th:errors="*{telefono}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="dir" class="form-label">Dirección</label>
+                        <input id="dir" type="text" class="form-control" th:field="*{direccion}" th:errorClass="'form-label text-danger'">
+                        <small class="form-label text-danger" th:errors="*{direccion}"></small>
+                    </div>
+                    
+                </div>
+                <div class="card-footer mb-5">
+                    <!-- th:href="(${idUsuario} != null) ? @{/clientes/listado} : @{/home}" -->
+                    <button type="submit" class="btn btn-outline-success float-end ms-2" >Guardar</button>
+                    <!-- <a href="/home" class="btn btn-outline-danger float-end">Cancelar</a> -->
+                    <a th:href="@{${idUsuario} != null ? '/clientes/listado' : '/home'}" class="btn btn-outline-danger float-end">Cancelar</a>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Mis JS -->
+    <script th:fragment="js"></script>
+</body>
+</html>

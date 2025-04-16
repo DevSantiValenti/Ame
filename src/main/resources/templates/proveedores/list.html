@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+</head>
+
+<body class="ms-5 me-5 my-3">
+    <div layout:fragment="contenido">
+        <div class="card my-4">
+            <div class="card-header">
+                <h4 class="card-tittle" th:text="${titulo}"></h4>
+            </div>
+            <div class="card-body">
+                <table id="tabla-productos" class="table table-striped table-hover table-bordered table-responsive"
+                    style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>E-mail</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <!-- <th>Localidad</th> -->
+                            <th style="max-width: 35px;">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="p : ${proveedores}">
+                            <td th:text="${p.id}"></td>
+                            <td th:text="${p.nombre}"></td>
+                            <td th:text="${p.email}"></td>
+                            <td th:text="${p.telefono}"></td>
+                            <td th:text="${p.direccion}"></td>
+                            <!-- <td th:text="${p.localidad}"></td> -->
+                            <td>
+                                <a th:href="@{/proveedores/editar/} + ${p.id}" class="btn btn-sm btn-warning">Editar</a>
+                                <a sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/proveedores/borrar/} + ${p.id}" class="btn btn-sm btn-danger">Borrar</a>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>E-mail</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <!-- <th>Localidad</th> -->
+                            <th style="max-width: 35px;">Opciones</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="card-footer">
+                <a th:href="@{/proveedores/nuevo}" class="btn btn-outline-primary float-end">Nuevo Proveedor</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mis JS -->
+    <script th:fragment="js"></script>
+</body>
+
+</html>

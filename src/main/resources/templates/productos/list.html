@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+</head>
+
+<body class="ms-5 me-5 my-3">
+    <div layout:fragment="contenido">
+        <!-- Filtros y Productos -->
+        <div id="alert-container"></div>
+        <div class="container mt-5">
+            <div class="row">
+                <!-- Columna de Filtros -->
+                <div class="col-md-3">
+                    <div class="list-group">
+                        <!-- <h5>Formas de Pago</h5>
+                        <a href="#" class="list-group-item list-group-item-action fondo">Cuotas sin interés</a>
+                        <a href="#" class="list-group-item list-group-item-action fondo">Pago contra entrega</a> -->
+                        <br>
+                        <!-- <h5>Precio</h5>
+                        <div class="mb-3">
+                            <label for="priceRange" class="form-label">Rango de precios:</label>
+                            <input type="range" class="form-range" id="priceRange" min="1000" max="50000" step="500">
+                            <p>Precio seleccionado: <span id="priceValue">1000</span></p>
+                        </div> -->
+                        <h5>Categorías</h5>
+                        <a th:href="@{/productos/listado}" class="list-group-item list-group-item-action">Todos los
+                            Productos</a>
+
+                        <div th:each="c : ${categorias}">
+                            <a th:href="@{/productos/listado(categoria=${c.id})}" th:text="${c.nombre}"
+                                class="list-group-item list-group-item-action"></a>
+
+                        </div>
+                        <br>
+                        <h5>Colores</h5>
+                        <div class="mb-3">
+                            <div th:each="color : ${colores}">
+                                <a th:href="@{/productos/listado(color=${color})}" th:text="${color}"
+                                    class="list-group-item list-group-item-action"></a>
+                            </div>
+                            <!-- <a href="#" class="list-group-item list-group-item-action">Negro</a>
+                            <a href="#" class="list-group-item list-group-item-action">Rojo</a>
+                            <a href="#" class="list-group-item list-group-item-action">Blanco</a>
+                            <a href="#" class="list-group-item list-group-item-action">Amarillo</a>
+                            <a href="#" class="list-group-item list-group-item-action">Rosado</a>
+                            <a href="#" class="list-group-item list-group-item-action">Marron</a>
+                            <a href="#" class="list-group-item list-group-item-action">Azul</a>
+                            <a href="#" class="list-group-item list-group-item-action">Morado</a>
+                            <a href="#" class="list-group-item list-group-item-action">Gris</a>
+                            <a href="#" class="list-group-item list-group-item-action">Verde</a>
+                            <a href="#" class="list-group-item list-group-item-action">Naranja</a>
+                            <a href="#" class="list-group-item list-group-item-action">Purpura</a>
+                            <a href="#" class="list-group-item list-group-item-action">Celeste</a> -->
+
+                        </div>
+                        <!-- <h5>Material</h5>
+                        <div class="mb-3">
+                            <a href="#" class="list-group-item list-group-item-action">Tela</a>
+                            <a href="#" class="list-group-item list-group-item-action">Ecocuero</a>
+                            <a href="#" class="list-group-item list-group-item-action">Tela Impermeable</a>
+                        </div> -->
+                        <!-- Otros filtros -->
+                    </div>
+                </div>
+
+                <!-- Columna de Productos -->
+                <div class="col-md-9">
+                    <h1 class="text-center text-dark">Nuestros Productos</h1>
+                    <div class="row">
+                        <!-- Prueba Producto traido de base de datos -->
+                        <div class="col-md-3" th:each="p : ${productos}" th:if="${p.activo and p.stock > 0}">
+                            <div class="product-box">
+                                <img th:src="${p.linkImagen}" alt="Producto" class="product-image">
+                                <h5 class="card-text" th:text="${p.descripcion}"></h5>
+                                <p>Precio Mayorista: $<span th:text="${p.precioMay}"></span></p>
+                                <p>Precio Minorista: $<span th:text="${p.precioMin}"></span></p>
+                                <p>Material: <span th:text="${p.material}"></span></p>
+                                <button class="btn btn-primary btn-agregar-carrito" th:data-producto-id="${p.id}"
+                                                                th:data-producto-nombre="${p.descripcion}"
+                                                                th:data-producto-precio="${p.precioMin}"
+                                                                th:data-producto-imagen="${p.linkImagen}"
+                                                                th:data-producto-stock="${p.stock}">Añadir al carrito</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mis JS -->
+    <script th:fragment="js"></script>
+    <!-- Código JS para Manejar el Carrito -->
+
+    
+</body>
+
+</html>

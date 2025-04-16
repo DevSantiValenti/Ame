@@ -1,0 +1,289 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : 21 sep. 2024, 13:31:56
+    Author     : santi
+*/
+
+
+
+@font-face {
+    font-family: 'DM SerifDisplay';
+    src: url('/fonts/DMSerifDisplay-Regular.ttf') format('truetype');
+    /* Añade otros formatos si los tienes, por ejemplo:
+    src: url('/fonts/DMSerifDisplay.woff2') format('woff2'),
+         url('/fonts/DMSerifDisplay.woff') format('woff'); */
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'DM SerifDisplay', sans-serif;
+    /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+    /* background: #ccccff; */
+    background: #f3d2ff;
+    height: 100vh;
+}
+
+.formulario {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background: #343a40;
+    border-radius: 10px;
+    box-shadow: 7px 13px 37px #000;
+}
+
+.formulario h1 {
+    color: white;
+    text-align: center;
+    padding: 0 0 20px 0;
+    border-bottom: 1px solid silver;
+}
+
+.formulario form {
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+form .username {
+    position: relative;
+    border-bottom: 2px solid #adadad;
+    margin: 30px 0;
+}
+
+.username input {
+    width: 100%;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16 px;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.recordar {
+    margin: -5px 0 20px 5px;
+    color: blue;
+    cursor: pointer;
+    color: white;
+}
+
+.recordar:hover {
+    text-decoration: underline;
+}
+
+.formulario button[type="submit"] {
+    width: 100%;
+    height: 50px;
+    border: 1px solid;
+    background: linear-gradient(150deg, #ff99ff, #6666ff);
+    border-radius: 25px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+}
+
+.formulario button[type="submit"]:hover {
+    border-color: purple;
+    transition: .5s;
+}
+
+.registrarse {
+    margin: 30px 0;
+    text-align: center;
+    font-size: 16px;
+    color: white;
+}
+
+.registrarse a {
+    color: white;
+    text-decoration: none;
+}
+
+.registrarse a:hover {
+    text-decoration: underline;
+}
+
+.product-box {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    /* Separa los card */
+    text-align: center;
+    background-color: #fff;
+    transition: box-shadow 0.3s;
+    min-height: 500px !important;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    box-sizing: border-box;
+}
+
+
+.product-box:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+    /* Sombra en hover */
+}
+
+.product-image {
+    max-width: auto;
+    min-height: 200px;
+    max-height: 200px;
+    margin-bottom: 10px;
+    object-fit: contain;
+    /* Ajusta la imagen al tamaño del contenedor */
+}
+
+/* Esto hace que el texto no se salga del card */
+.card-text {
+    word-wrap: break-word;
+    /* Permite dividir palabras largas */
+    word-break: break-word;
+    /* Fuerza el salto de línea para palabras largas */
+}
+
+/* Esto hace que el boton de Añadir al carrito siempre quede abajo */
+.product-box button {
+    margin-top: auto;
+}
+
+/*.fondo { Esto era para cambiar el fondo de los nombres de las categorias 
+     background-color: #ccccff; 
+    background-color: inherit;
+    border: none;
+    color: whitesmoke;
+} */
+
+
+/* Esto hace que centre el texto, y que la imagen se muestre de fondo */
+.centrar {
+    /* position: relative; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    color: #000;
+    height: 50vh;
+    background-image: url(/img/ame.png);
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    padding-top: 40px;
+    margin-top: 20px;
+}
+
+.centrar h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+h3 {
+    font-size: 1.5em;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Hacer que las imagenes "crezcan" cuando se les pasa el cursor encima */
+.fotitos {
+    display: flex;
+    width: 1416x;
+    height: 430px;
+    margin-right: 0;
+}
+
+section img {
+    width: 0px;
+    flex-grow: 1;
+    object-fit: cover;
+    opacity: .8;
+    transition: .5s ease;
+}
+
+section img:hover {
+    cursor: crosshair;
+    width: 300px;
+    opacity: 1;
+    filter: contrast(120%);
+}
+
+/* Tacha los productos desactivados en list-admin */
+.tachado {
+    text-decoration: line-through;
+    text-decoration-color: crimson;
+    color: antiquewhite;
+    filter: grayscale(1);
+}
+
+.carrito-panel {
+    position: fixed !important;
+    right: 10px;
+    top: 50px;
+    /* width: 350px; */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1050;
+    max-width: 300px;
+    /* Ajusta según el diseño */
+    word-wrap: break-word;
+    /* Asegura que el texto no sobresalga */
+    overflow-x: hidden;
+    /* Oculta cualquier desbordamiento horizontal */
+}
+
+.carrito-panel.d-none {
+    display: none;
+}
+
+/* Codigo para ver mas y ver menos */
+.lista-lineas {
+    max-height: 60px;
+    overflow-y: hidden;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.lista-lineas.ver-mas {
+    max-height: none;
+}
+
+.ver-mas, .ver-menos {
+    display: block;
+    margin-top: 10px;
+    background-color: none;
+    color: #000;
+    border: none;
+    /* padding: 5px 10px; */
+    /* font-size: 14px; */
+    cursor: pointer;
+}
+
+/* Evitamos que el botón afecte las listas o cambie su fondo */
+
+
+  .hidden {
+    display: none; /* Clase para ocultar los botones */
+  }
+
+/* Evitamos cambiar el fondo al hacer clic */
+button:active,button:focus {
+    outline: none;
+}
+
+/* navbar .carrito-panel{
+    position: fixed;
+} */

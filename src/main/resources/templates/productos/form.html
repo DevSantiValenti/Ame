@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+</head>
+
+<body class="ms-5 me-5 my-3">
+    <div layout:fragment="contenido">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h4 class="text-primary" th:text="${titulo}"></h4>
+            </div>
+            <form method="post" th:action="@{/productos/guardar}" th:object="${producto}">
+                <div class="card-body">
+                    <div class="form">
+                        <label for="cod-barra" class="form-label">Código de Barras</label>
+                        <input id="cod-barra" type="text" class="form-control" maxlength="13" th:field="*{codigoBarras}">
+                    </div>
+                    <div class="form">
+                        <label for="descri" class="form-label">Descripción</label>
+                        <input id="descri" type="text" class="form-control" th:field="*{descripcion}" th:errorClass="'form-label text-danger'">
+                        <small class="form-label text-danger" th:errors="*{descripcion}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="preMin" class="form-label">Precio Minorista</label>
+                        <input type="text" name="preMin" class="form-control money" th:field="*{precioMin}" th:errorClass="'form-control alert-danger'">
+                        <small class="form-label text-danger" th:errors="*{precioMin}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="preMay" class="form-label">Precio Mayorista</label>
+                        <input type="text" name="preMay" class="form-control money" th:field="*{precioMay}" th:errorClass="'form-control alert-danger'">
+                        <small class="form-label text-danger" th:errors="*{precioMay}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="sto" class="form-label">Stock</label>
+                        <input type="text" id="sto" class="form-control" th:field="*{stock}" th:errorClass="'form-control alert-danger'">
+                        <small class="form-label text-danger" th:errors="*{stock}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="mate" class="form-label">Material</label>
+                        <input type="text" name="mate" class="form-control" th:field="*{material}" >
+                    </div>
+                    <div class="form">
+                        <label for="color" class="form-label">Color</label>
+                        <input type="text" name="color" class="form-control" th:field="*{color}" >
+                    </div>
+                    <div class="form">
+                        <label for="img" class="form-label">Link de la imágen</label>
+                        <input type="text" id="img" class="form-control" th:field="*{linkImagen}">
+                    </div>
+                    <div class="form">   
+                        <label for="cat" class="form-label">Categoría</label>
+                        <select name="cat" id="cat" class="form-select" th:field="*{categoria}">
+                            <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-footer mb-5">
+                    <button type="submit" class="btn btn-outline-success float-end ms-2">Guardar</button>
+                    <a th:href="@{/productos/nuevo}" class="btn btn-outline-danger float-end">Cancelar</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Mis JS -->
+    <script th:fragment="js"></script>
+</body>
+
+</html>

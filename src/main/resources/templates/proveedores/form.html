@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+</head>
+
+<body class="ms-5 me-5 my-3">
+    <div layout:fragment="contenido">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h4 class="text-primary" th:text="${titulo}"></h4>
+            </div>
+            <form method="post" th:action="@{/proveedores/guardar}" th:object="${proveedor}">
+                <div class="card-body">
+                    <div class="form">
+                        <label for="cod-barra" class="form-label">Nombre</label>
+                        <input id="cod-barra" type="text" class="form-control" maxlength="45" th:field="*{nombre}">
+                    </div>
+                    <div class="form">
+                        <label for="descri" class="form-label">E-mail</label>
+                        <input id="descri" type="text" class="form-control" th:field="*{email}" th:errorClass="'form-label text-danger'">
+                        <small class="form-label text-danger" th:errors="*{email}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="preMin" class="form-label">Teléfono</label>
+                        <input type="text" name="preMin" class="form-control money" th:field="*{telefono}" th:errorClass="'form-control alert-danger'">
+                        <small class="form-label text-danger" th:errors="*{telefono}"></small>
+                    </div>
+                    <div class="form">
+                        <label for="preMay" class="form-label">Dirección</label>
+                        <input type="text" name="preMay" class="form-control money" th:field="*{direccion}" th:errorClass="'form-control alert-danger'">
+                        <small class="form-label text-danger" th:errors="*{direccion}"></small>
+                    </div>
+                    <!-- <div class="form">
+                        <label for="sto" class="form-label">Localidad</label>
+                        <input type="text" id="sto" class="form-control" th:field="*{localidad}" th:errorClass="'form-control alert-danger'">
+                        <small class="form-label text-danger" th:errors="*{localidad}"></small>
+                    </div> -->
+                </div>
+                <div class="card-footer mb-5">
+                    <button type="submit" class="btn btn-outline-success float-end ms-2">Guardar</button>
+                    <a th:href="@{/proveedores/listado}" class="btn btn-outline-danger float-end">Cancelar</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Mis JS -->
+    <script th:fragment="js"></script>
+</body>
+
+</html>
