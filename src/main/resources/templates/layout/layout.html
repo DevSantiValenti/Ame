@@ -91,13 +91,14 @@
                             <i class='bx bx-user bx-tada'></i>
                             <span>Hola</span>
                             <!-- <span sec:authentication="name"></span> -->
-                             <span th:text="${nombreUsuario}"></span>
+                            <span th:text="${nombreUsuario}"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="linkUsuario">
                             <li>
                                 <!-- <a class="dropdown-item" href="#">Cuenta</a> -->
 
-                                <a class="dropdown-item" th:href="(${idCliente != null}) ? @{/clientes/editar/} + ${idCliente} : @{/usuarios/editar/} + ${idUsuario}">Configuración</a>
+                                <a class="dropdown-item"
+                                    th:href="(${idCliente != null}) ? @{/clientes/editar/} + ${idCliente} : @{/usuarios/editar/} + ${idUsuario}">Configuración</a>
                                 <hr />
                                 <form id="frmSalir" th:action="@{/logout}" method="post">
                                     <a class="dropdown-item" href="#" onclick="$('#frmSalir').submit();">Cerrar
@@ -210,7 +211,8 @@
             <!-- Inputs ocultos para enviar datos -->
             <div id="inputs-carrito"></div>
 
-            <button type="submit" class="btn btn-primary w-100">Pagar con Mercado Pago<img src="/img/mp4.png" alt="mp" style="height: 35px; width: 50px;"></button>
+            <button type="submit" class="btn btn-primary w-100">Pagar con Mercado Pago<img src="/img/mp4.png" alt="mp"
+                    style="height: 35px; width: 50px;"></button>
             <!-- <img src="/img/mp.png" alt="mp" style="height: 50px; width: 50px;"> -->
         </div>
     </form>
@@ -228,6 +230,8 @@
                         </p>
                         <br>
                         <!-- Imagen de la ubicación -->
+                        <!-- AIzaSyD5fV9Y2gmGzraLqKn8H1PeoQnnze8Ody0 -->
+                        <!-- <div id="map" style="height: 400px; width: 100%;"></div> -->
                         <a href="https://www.google.com.ar/maps/place/Ameghino+45,+H3500+Resistencia,+Chaco/@-27.4542957,-58.9930622,17z/data=!3m1!4b1!4m6!3m5!1s0x94450c8cb92dbb9d:0x7a61721b83c5bf6!8m2!3d-27.4542957!4d-58.9904873!16s%2Fg%2F11sw2kw05b?entry=ttu&g_ep=EgoyMDI0MDkyMy4wIKXMDSoASAFQAw%3D%3D"
                             target="_blank"><img src="/img/a45.png" alt="Ubicación" class="img-fluid rounded"
                                 style="max-width: 100%; height: auto;"></a>

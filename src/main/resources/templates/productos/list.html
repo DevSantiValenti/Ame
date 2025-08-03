@@ -81,10 +81,9 @@
                                 <p>Precio Minorista: $<span th:text="${p.precioMin}"></span></p>
                                 <p>Material: <span th:text="${p.material}"></span></p>
                                 <button class="btn btn-primary btn-agregar-carrito" th:data-producto-id="${p.id}"
-                                                                th:data-producto-nombre="${p.descripcion}"
-                                                                th:data-producto-precio="${p.precioMin}"
-                                                                th:data-producto-imagen="${p.linkImagen}"
-                                                                th:data-producto-stock="${p.stock}">Añadir al carrito</button>
+                                    th:data-producto-nombre="${p.descripcion}" th:data-producto-precio="${p.precioMin}"
+                                    th:data-producto-imagen="${p.linkImagen}" th:data-producto-stock="${p.stock}">Añadir
+                                    al carrito</button>
                             </div>
                         </div>
                     </div>
@@ -97,7 +96,7 @@
     <script th:fragment="js"></script>
     <!-- Código JS para Manejar el Carrito -->
 
-    
+
 </body>
 
 </html>

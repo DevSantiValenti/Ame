@@ -152,7 +152,6 @@ public class ProductoController {
     public String borrarProducto(@PathVariable Long id, RedirectAttributes flash) {
         
         Producto producto = productoService.buscarPorId(id);
-
         if (producto != null) {
             productoService.borrarPorId(id);
             String mensaje = "Producto " + producto.getDescripcion() + " borrado";
